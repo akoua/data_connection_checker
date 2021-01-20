@@ -149,12 +149,13 @@ class DataConnectionChecker {
   Future<bool> get hasConnection async {
     List<Future<AddressCheckResult>> requests = [];
     var i = random.nextInt(addresses.length);
-    addresses = addresses[i] as List;
+    var addr = addresses[i];
     print('>>Addresses $addresses');
 
-    for (var addressOptions in addresses) {
-      requests.add(isHostReachable(addressOptions));
-    }
+    // for (var addressOptions in addresses) {
+    // requests.add(isHostReachable(addressOptions));
+    // }
+    requests.add(isHostReachable(addr));
     _lastTryResults = List.unmodifiable(await Future.wait(requests));
 
     return _lastTryResults.map((result) => result.isSuccess).contains(true);
