@@ -60,11 +60,6 @@ class DataConnectionChecker {
   /// | 208.67.220.220 | OpenDNS    | https://use.opendns.com/                        |
   static final List<AddressCheckOptions> DEFAULT_ADDRESSES = List.unmodifiable([
     AddressCheckOptions(
-      InternetAddress('1.1.1.1'),
-      port: DEFAULT_PORT,
-      timeout: DEFAULT_TIMEOUT,
-    ),
-    AddressCheckOptions(
       InternetAddress('8.8.4.4'),
       port: DEFAULT_PORT,
       timeout: DEFAULT_TIMEOUT,
@@ -74,6 +69,11 @@ class DataConnectionChecker {
       port: DEFAULT_PORT,
       timeout: DEFAULT_TIMEOUT,
     ),
+    // AddressCheckOptions(
+    //   InternetAddress('1.1.1.1'),
+    //   port: DEFAULT_PORT,
+    //   timeout: DEFAULT_TIMEOUT,
+    // ),
   ]);
 
   /// A list of internet addresses (with port and timeout) to ping.
@@ -143,14 +143,14 @@ class DataConnectionChecker {
   /// `false` otherwise.
   Future<bool> get hasConnection async {
     List<Future<AddressCheckResult>> requests = [];
-    var i = Random().nextInt(addresses.length);
-    var addr = addresses[i];
+    // var i = Random().nextInt(addresses.length);
+    // var addr = addresses[i];
     // print('>>Addresses $addresses');
 
-    // for (var addressOptions in addresses) {
-    // requests.add(isHostReachable(addressOptions));
-    // }
-    requests.add(isHostReachable(addr));
+    for (var addressOptions in addresses) {
+      requests.add(isHostReachable(addressOptions));
+    }
+
     _lastTryResults = List.unmodifiable(await Future.wait(requests));
 
     return _lastTryResults.map((result) => result.isSuccess).contains(true);
