@@ -33,7 +33,7 @@ class DataConnectionChecker {
   /// Default interval is 10 seconds
   ///
   /// Interval is the time between automatic checks
-  static const Duration DEFAULT_INTERVAL = const Duration(seconds: 20);
+  static const Duration DEFAULT_INTERVAL = const Duration(seconds: 40);
 
   /// Predefined reliable addresses. This is opinionated
   /// but should be enough. See https://www.dnsperf.com/#!dns-resolvers
