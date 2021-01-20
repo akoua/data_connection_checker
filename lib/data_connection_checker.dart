@@ -90,11 +90,6 @@ class DataConnectionChecker {
   /// See [AddressCheckOptions] for more info.
   List<AddressCheckOptions> addresses = DEFAULT_ADDRESSES;
 
-  /// Random value generated for selected one adresse
-  ///
-  Random random = new Random();
-  // int index = random.nextInt(addresses.length);
-
   /// This is a singleton that can be accessed like a regular constructor
   /// i.e. DataConnectionChecker() always returns the same instance.
   factory DataConnectionChecker() => _instance;
@@ -148,7 +143,7 @@ class DataConnectionChecker {
   /// `false` otherwise.
   Future<bool> get hasConnection async {
     List<Future<AddressCheckResult>> requests = [];
-    var i = random.nextInt(addresses.length);
+    var i = Random().nextInt(addresses.length);
     var addr = addresses[i];
     print('>>Addresses $addresses');
 
