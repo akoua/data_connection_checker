@@ -145,7 +145,7 @@ class DataConnectionChecker {
     List<Future<AddressCheckResult>> requests = [];
     var i = Random().nextInt(addresses.length);
     var addr = addresses[i];
-    print('>>Addresses $addresses');
+    // print('>>Addresses $addresses');
 
     // for (var addressOptions in addresses) {
     // requests.add(isHostReachable(addressOptions));
