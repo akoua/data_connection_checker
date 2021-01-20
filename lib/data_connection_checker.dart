@@ -6,6 +6,8 @@ library data_connection_checker;
 import 'dart:io';
 import 'dart:async';
 
+import 'dart:math';
+
 /// Represents the status of the data connection.
 /// Returned by [DataConnectionChecker.connectionStatus]
 enum DataConnectionStatus {
@@ -26,7 +28,7 @@ class DataConnectionChecker {
   ///
   /// Timeout is the number of seconds before a request is dropped
   /// and an address is considered unreachable
-  static const Duration DEFAULT_TIMEOUT = const Duration(seconds: 10);
+  static const Duration DEFAULT_TIMEOUT = const Duration(seconds: 5);
 
   /// Default interval is 10 seconds
   ///
@@ -88,6 +90,11 @@ class DataConnectionChecker {
   /// See [AddressCheckOptions] for more info.
   List<AddressCheckOptions> addresses = DEFAULT_ADDRESSES;
 
+  /// Random value generated for selected one adresse
+  ///
+  Random random = new Random();
+  // int index = random.nextInt(addresses.length);
+
   /// This is a singleton that can be accessed like a regular constructor
   /// i.e. DataConnectionChecker() always returns the same instance.
   factory DataConnectionChecker() => _instance;
@@ -141,6 +148,9 @@ class DataConnectionChecker {
   /// `false` otherwise.
   Future<bool> get hasConnection async {
     List<Future<AddressCheckResult>> requests = [];
+    var i = random.nextInt(addresses.length);
+    addresses = addresses[i] as List;
+    print('>>Addresses $addresses');
 
     for (var addressOptions in addresses) {
       requests.add(isHostReachable(addressOptions));
